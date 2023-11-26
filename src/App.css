@@ -27,7 +27,10 @@
     font-size: calc(10px + 2vmin);
     color: white;
   }
-  
+  .Albums tbody td a.edit {
+    font-size: 250%;
+    font-style: italic;
+  } 
   .App-link {
     color: #61dafb;
   }
@@ -40,3 +43,57 @@
       transform: rotate(360deg);
     }
   }
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px; /* Adjust margin as needed */
+}
+
+/* First line with large text */
+.large-text {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+/* Second line with smaller font */
+.small-text {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 60%; /* Adjust width as needed */
+  margin-bottom: 30px; /* Adjust margin as needed */
+}
+
+/* Button styles */
+.button-container button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Red 'X' button */
+.delete-button {
+  background-color: red;
+  color: white;
+}
+
+/* Pencil button for editing */
+.edit-button {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Back arrow button */
+.back-button {
+  background-color: #2ecc71;
+  color: white;
+}

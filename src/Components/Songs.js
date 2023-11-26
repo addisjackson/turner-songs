@@ -10,7 +10,7 @@ const Songs = () => {
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await fetch('http://localhost:9090/songs');
+        const response = await fetch('http://localhost:8080/songs');
         const data = await response.json();
         setSongs(data);
         setFilteredSongs(data);

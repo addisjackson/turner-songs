@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import Albums from "./Albums";
+
 
 function SongDetails() {
   const [song, setSong] = useState([]);
@@ -30,40 +30,39 @@ function SongDetails() {
   };
 
   return (
-    <>
+    <div className="main-container">
       <article>
         <h3>
           {song.is_favorite ? <span>⭐️</span> : null} {song.name}
         </h3>
         <h5>
-          <span>
+          <span className="large-text">
             <a href={song.url}>{song.name}</a>
           </span>{" "}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {song.artist}
-        </h5>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </h5>
+          <div className="small-text"> {song.artist}
+  
         <h6>{song.album}</h6>
-        <p>{song.title}</p>
-        <div className="showNavigation">
-          <div>
-            {" "}
-            <Link to={`/songs`}>
-              <button>Back</button>
-            </Link>
-          </div>
+        <p>{song.title}</p></div>
+            <div className="button-container">
           <div>
             <Link to={`/songs/${id}/edit`}>
-              <button>Edit</button>
+              <button className="edit-button">Edit</button>
+            </Link>
+          </div>
+          <div> {" "}
+            <Link to={`/songs`}>
+              <button className="back-button" >Back</button>
             </Link>
           </div>
           <div>
-            <button onClick={handleDelete}>Delete</button>
+            <button  className="delete-button" onClick={handleDelete}>Delete</button>
           </div>
         </div>
-        <Albums />
+
       </article>
 
-    </>
+      </div>
   );
 }
 

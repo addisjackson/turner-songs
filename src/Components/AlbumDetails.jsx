@@ -8,7 +8,7 @@ const AlbumDetails = ({ album, onDelete }) => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`http://localhost:9090/albums/${album.id}`, {
+      await fetch(`http://localhost:8080/albums/${album.id}`, {
         method: 'DELETE',
       });
       onDelete();

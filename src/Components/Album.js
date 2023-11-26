@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Album from './Album';
-import { Link } from 'react-router-dom';
-import { FaPencilAlt } from 'react-icons/fa';
 
-const Songs = () => {
+import { Link } from 'react-router-dom';
+import { FaTimes, FaPencilAlt } from 'react-icons/fa';
+
+const Album = () => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const response = await fetch('http://localhost:9090/albums');
+        const response = await fetch('http://localhost:8080/albums');
         const data = await response.json();
         setAlbums(data);
       } catch (error) {
@@ -22,7 +22,6 @@ const Songs = () => {
 
   return (
     <div>
-      <h1>Albums</h1>
       <table style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr>
@@ -35,7 +34,10 @@ const Songs = () => {
         <tbody>
           {albums.map((album) => (
             <tr key={album.id}>
-              <td><Album album={album} /></td>
+            <td style={{ textAlign: 'center' }}>
+            <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(id)} />
+          </td>
+          <td><Album album={album} /></td>
               <td>{album.title}</td>
               <td>{album.year_of_release}</td>
               <td style={{ textAlign: 'center' }}>
@@ -49,4 +51,4 @@ const Songs = () => {
   );
 };
 
-export default Songs;
+export default Album;

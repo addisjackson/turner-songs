@@ -1,52 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Album from './Album';
-import { Link } from 'react-router-dom';
-import { FaPencilAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Songs = () => {
-  const [albums, setAlbums] = useState([]);
+const AlbumNewForm = () => {
+  const [title, setTitle] = useState('');
+  const [release_date, setRelease_date] = useState('');
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAlbums = async () => {
-      try {
-        const response = await fetch('http://localhost:9090/albums');
-        const data = await response.json();
-        setAlbums(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    fetchAlbums();
-  }, []);
+    try {
+      await fetch('http://localhost:8080/albums', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: {title}, release_date: {release_date}}),
+      });
+      navigate('/albums');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
-      <h1>Albums</h1>
-      <table style={{ borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th>Delete</th>
-            <th>Name</th>
-            <th>Year of Release</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {albums.map((album) => (
-            <tr key={album.id}>
-              <td><Album album={album} /></td>
-              <td>{album.title}</td>
-              <td>{album.year_of_release}</td>
-              <td style={{ textAlign: 'center' }}>
-                <Link to={`/albums/${album.id}/edit`}><FaPencilAlt style={{ cursor: 'pointer' }} /></Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h1>Create New Album</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="release_date">Date of Release:</label>
+          <input
+            type="text"
+            id="release_date"
+            value={release_date}
+            onChange={(event) => setRelease_date(event.target.value)}
+          />
+        </div>
+        <button type="submit">Create Album</button>
+      </form>
     </div>
   );
 };
 
-export default Songs;
+export default AlbumNewForm;

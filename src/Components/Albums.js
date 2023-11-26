@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Album from './Album';
-import { FaPencilAlt } from 'react-icons/fa'; // FaPencilAlt from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaTimes, FaPencilAlt } from 'react-icons/fa';
+
 const Albums = () => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const response = await fetch('http://localhost:9090/albums');
+        const response = await fetch('http://localhost:8080/albums');
         const data = await response.json();
         setAlbums(data);
       } catch (error) {
@@ -18,9 +20,21 @@ const Albums = () => {
     fetchAlbums();
   }, []);
 
+  const onDelete = async (id) => {
+    try {
+      // Make a DELETE request to your API endpoint with the specified ID
+      await fetch(`http://localhost:8080/albums/${id}`, {
+        method: 'DELETE',
+      });
+      // Remove the deleted album from state
+      setAlbums(albums.filter((album) => album.id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-      <h1>Albums</h1>
       <table style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr>
@@ -33,11 +47,19 @@ const Albums = () => {
         <tbody>
           {albums.map((album) => (
             <tr key={album.id}>
-              <td><Album album={album} /></td>
+              <td style={{ textAlign: 'center' }}>
+                <FaTimes
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => onDelete(album.id)}
+                />
+              </td>
+             
               <td>{album.title}</td>
               <td>{album.release_date}</td>
               <td style={{ textAlign: 'center' }}>
-                <Link to={`/albums/${album.id}/edit`}><FaPencilAlt style={{ cursor: 'pointer' }} /></Link>
+                <Link to={`/albums/${album.id}/edit`}>
+                  <FaPencilAlt style={{ cursor: 'pointer' }} />
+                </Link>
               </td>
             </tr>
           ))}
