@@ -20,32 +20,43 @@ const Album = () => {
     fetchAlbums();
   }, []);
 
+  const onDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:8080/albums/${id}`, {
+        method: 'DELETE',
+      });
+      // Remove the deleted album from the state
+      setAlbums(albums.filter((album) => album.id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <table style={{ borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th>Delete</th>
-            <th>Name</th>
-            <th>Year of Release</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {albums.map((album) => (
-            <tr key={album.id}>
+        {/* Table headers */}
+        {/* Table body */}
+        {albums.map((album) => (
+          <tr key={album.id}>
+            {/* Delete button */}
+            {/* Album details */}
             <td style={{ textAlign: 'center' }}>
-            <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(id)} />
-          </td>
-          <td><Album album={album} /></td>
-              <td>{album.title}</td>
-              <td>{album.year_of_release}</td>
-              <td style={{ textAlign: 'center' }}>
-                <Link to={`/albums/${album.id}/edit`}><FaPencilAlt style={{ cursor: 'pointer' }} /></Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+              <FaTimes
+                style={{ color: 'red', cursor: 'pointer' }}
+                onClick={() => onDelete(album.id)} // Pass album.id to onDelete
+              />
+            </td>
+            <td>{album.title}</td>
+            <td>{album.year_of_release}</td>
+            <td style={{ textAlign: 'center' }}>
+              {/* Edit button */}
+              <Link to={`/albums/${album.id}/edit`}>
+                <FaPencilAlt style={{ cursor: 'pointer' }} />
+              </Link>
+            </td>
+          </tr>
+        ))}
       </table>
     </div>
   );
