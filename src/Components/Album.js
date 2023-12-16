@@ -35,12 +35,8 @@ const Album = () => {
   return (
     <div>
       <table style={{ borderCollapse: 'collapse' }}>
-        {/* Table headers */}
-        {/* Table body */}
         {albums.map((album) => (
           <tr key={album.id}>
-            {/* Delete button */}
-            {/* Album details */}
             <td style={{ textAlign: 'center' }}>
               <FaTimes
                 style={{ color: 'red', cursor: 'pointer' }}
@@ -50,7 +46,6 @@ const Album = () => {
             <td>{album.title}</td>
             <td>{album.year_of_release}</td>
             <td style={{ textAlign: 'center' }}>
-              {/* Edit button */}
               <Link to={`/albums/${album.id}/edit`}>
                 <FaPencilAlt style={{ cursor: 'pointer' }} />
               </Link>

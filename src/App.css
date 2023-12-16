@@ -66,9 +66,9 @@
 
 /* Button container */
 .button-container {
-  display: flex;
+  display: inline-block;
   justify-content: space-between;
-  width: 60%; /* Adjust width as needed */
+  width: 40%; /* Adjust width as needed */
   margin-bottom: 30px; /* Adjust margin as needed */
 }
 
@@ -96,4 +96,18 @@
 .back-button {
   background-color: #2ecc71;
   color: white;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* Adjust as needed for spacing */
+}
+
+.edit-button,
+.back-button,
+.delete-button {
+  /* Add any additional styles you want for the buttons */
+  padding: 10px 15px;
 }

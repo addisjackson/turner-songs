@@ -44,7 +44,7 @@ function SongDetails() {
   
         <h6>{song.album}</h6>
         <p>{song.title}</p></div>
-            <div className="button-container">
+            <div className="button-container" >
           <div>
             <Link to={`/songs/${id}/edit`}>
               <button className="edit-button">Edit</button>

@@ -1,54 +1,73 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
-const AlbumEditForm = () => {
-  const [title, setTitle] = useState('');
-  const [release_date, setRelease_date] = useState('');
-  const navigate = useNavigate();
+const API = process.env.REACT_APP_API_URL;
 
-  const handleSubmit = async (event) => {
+function AlbumEditForm() {
+  let { id } = useParams();
+  let navigate = useNavigate();
+
+  const [album, setAlbum] = useState({
+    title: "",
+    year_of_release: "",
+  });
+
+  const updateAlbum = (updatedAlbum) => {
+    fetch(`${API}/albums/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAlbum),
+    })
+      .then(() => navigate(`/albums/${id}`))
+      .catch((err) => console.log(err));
+  };
+
+  const handleTextChange = (event) => {
+    setAlbum({ ...album, [event.target.id]: event.target.value });
+  };
+
+  useEffect(() => {
+    fetch(`${API}/albums/${id}`)
+      .then((res) => res.json())
+      .then((data) => setAlbum(data))
+      .catch(() => navigate(`/not-found`));
+  }, [id, navigate]);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      await fetch('http://localhost:8080/albums', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: title, release_date: release_date }),
-      });
-      navigate('/albums');
-    } catch (error) {
-      console.error(error);
-    }
+    updateAlbum(album, id);
   };
 
   return (
-    <div>
-    
+    <div className="Edit">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="release_date">Date of Release:</label>
-          <input
-            type="text"
-            id="release_date"
-            value={release_date}
-            onChange={(event) => setRelease_date(event.target.value)}
-          />
-        </div>
-        <button type="submit">Create Album</button>
+        <label htmlFor="title">Album Title:</label>
+        <input
+          id="title"
+          value={album.title}
+          type="text"
+          onChange={handleTextChange}
+          placeholder="Name of Album"
+          required
+        />
+        <label htmlFor="album">Year of Release:</label>
+        <input
+          id="year"
+          type="text"
+          name="year"
+          value={album.year_of_release}
+          onChange={handleTextChange}
+        />
+        <br />
+        <input type="submit" />
       </form>
+      <Link to={`/albums/${id}`}>
+        <button>Nevermind!</button>
+      </Link>
     </div>
   );
-};
+}
 
 export default AlbumEditForm;
