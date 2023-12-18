@@ -22,9 +22,6 @@ const Songs = () => {
     fetchSongs();
   }, []);
 
-  useEffect(() => {
-    filterSongs();
-  }, [songs, searchQuery]);
 
   const filterSongs = () => {
     if (searchQuery) {
@@ -63,6 +60,10 @@ const Songs = () => {
     setSongs(updatedSongs);
     setFilteredSongs(updatedSongs); // Update filteredSongs when deleting a song
   };
+
+  useEffect(() => {
+    filterSongs();
+  }, [songs, searchQuery, filterSongs]);
 
   return (
     <div>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Album from './Album';
 import { Link } from 'react-router-dom';
 import { FaTimes, FaPencilAlt } from 'react-icons/fa';
 
